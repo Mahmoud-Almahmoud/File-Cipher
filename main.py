@@ -2,13 +2,12 @@ import os
 import re
 import zlib
 import threading
-import customtkinter as ctk  # <-- Upgraded from tkinter to customtkinter
+import customtkinter as ctk
 from tkinter import filedialog, messagebox
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives import hashes
 
-# ---- Cryptography Constants & Logic ----
 SALT_SIZE = 16
 BLOCK_SIZE = 16
 CHUNK_SIZE = 64 * 1024 
@@ -36,7 +35,6 @@ def file_worker(file_path, password, encrypt=True):
         total_size = os.path.getsize(file_path)
         bytes_processed = 0
 
-        # Disable buttons using Modern states
         encrypt_btn.configure(state="disabled")
         decrypt_btn.configure(state="disabled")
         root.after(0, update_progress, 0)
@@ -137,7 +135,6 @@ def start_processing(encrypt=True):
     threading.Thread(target=file_worker, args=(file_path, password, encrypt), daemon=True).start()
 
 def update_progress(value):
-    # CustomTkinter progress bar ranges from 0.0 to 1.0
     progress_bar.set(value)
     percent_label.configure(text=f"{value*100:.1f}%")
 
@@ -160,7 +157,7 @@ def center_window(window, width=500, height=260):
     y = (screen_height // 2) - (height // 2)
     window.geometry(f"{width}x{height}+{x}+{y}")
 
-# ---- Modern GUI Configuration ----
+# ---- GUI Configuration ----
 ctk.set_appearance_mode("dark")       
 ctk.set_default_color_theme("blue")   
 
@@ -188,7 +185,6 @@ browse_btn.grid(row=1, column=1, sticky="e")
 pass_label = ctk.CTkLabel(main_frame, text="Secret Key / Password:", font=("Arial", 13, "bold"))
 pass_label.grid(row=2, column=0, sticky="w", pady=(15, 5))
 
-# ADDED show="*" back so the entry actually hides the typing
 password_entry = ctk.CTkEntry(main_frame, show="*", placeholder_text="Enter strong password...")
 password_entry.grid(row=3, column=0, columnspan=2, sticky="we")
 
@@ -198,11 +194,11 @@ progress_bar.grid(row=4, column=0, sticky="w", pady=(25, 0))
 progress_bar.set(0)
 
 percent_label = ctk.CTkLabel(main_frame, text="0.0%", font=("Arial", 12, "bold"))
-percent_label.grid(row=4, column=1, sticky="e", pady=(25, 0)) # Aligned pady with progress_bar
+percent_label.grid(row=4, column=1, sticky="e", pady=(25, 0))
 
 # Action Buttons Frame
 btn_frame = ctk.CTkFrame(main_frame, fg_color="transparent")
-btn_frame.grid(row=5, column=0, columnspan=2, sticky="we", pady=(25, 0)) # Increased pady to give buttons room
+btn_frame.grid(row=5, column=0, columnspan=2, sticky="we", pady=(25, 0))
 
 encrypt_btn = ctk.CTkButton(btn_frame, text="Encrypt File", fg_color="#E74C3C", hover_color="#C0392B", width=140, font=("Arial", 13, "bold"), command=lambda: start_processing(encrypt=True))
 encrypt_btn.pack(side="left", padx=(0, 10))
