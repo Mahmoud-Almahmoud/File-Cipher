@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import zlib
 import threading
 import customtkinter as ctk
@@ -157,6 +158,14 @@ def center_window(window, width=500, height=260):
     y = (screen_height // 2) - (height // 2)
     window.geometry(f"{width}x{height}+{x}+{y}")
 
+def get_asset_path(relative_path):
+    try:
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+
+    return os.path.join(base_path, relative_path)
+
 # ---- GUI Configuration ----
 ctk.set_appearance_mode("dark")       
 ctk.set_default_color_theme("blue")   
@@ -166,6 +175,16 @@ root.title("File Cipher")
 root.resizable(False, False)
 
 center_window(root, 520, 290) 
+
+icon_path = get_asset_path("assets/icon.ico")
+root.wm_iconbitmap(icon_path)
+
+import ctypes
+try:
+    myappid = 'mahmoudev.filecipher.version.1' 
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(myappid)
+except:
+    pass
 
 # Main Container Frame
 main_frame = ctk.CTkFrame(root, fg_color="transparent")

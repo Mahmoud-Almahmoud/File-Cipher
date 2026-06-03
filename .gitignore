@@ -35,4 +35,4 @@ dist/
 # This prevents you from accidentally pushing private encrypted test files to GitHub
 *.enc
 *.dec
-version_info.txt
+version.txt
