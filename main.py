@@ -162,7 +162,7 @@ ctk.set_appearance_mode("dark")
 ctk.set_default_color_theme("blue")   
 
 root = ctk.CTk()                      
-root.title("AES Cipher Pro")
+root.title("File Cipher")
 root.resizable(False, False)
 
 center_window(root, 520, 290) 
