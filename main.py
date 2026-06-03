@@ -151,6 +151,16 @@ def browse_file():
         file_entry.delete(0, "end")
         file_entry.insert(0, filename)
 
+def toggle_password():
+    current_show = password_entry.cget("show")
+    if current_show == "*":
+        password_entry.configure(show="")
+        show_hide_btn.configure(text="Hide")
+    else:
+        # It's currently visible -> Mask it
+        password_entry.configure(show="*")
+        show_hide_btn.configure(text="Show")
+
 def center_window(window, width=500, height=260):
     screen_width = window.winfo_screenwidth()
     screen_height = window.winfo_screenheight()
@@ -200,12 +210,15 @@ file_entry.grid(row=1, column=0, sticky="we", padx=(0, 10))
 browse_btn = ctk.CTkButton(main_frame, text="Browse", width=100, command=browse_file)
 browse_btn.grid(row=1, column=1, sticky="e")
 
+show_hide_btn = ctk.CTkButton(main_frame, text="Show", width=100, command=toggle_password)
+show_hide_btn.grid(row=3, column=1, sticky="e")
+
 # Password Entry Row
-pass_label = ctk.CTkLabel(main_frame, text="Secret Key / Password:", font=("Arial", 13, "bold"))
+pass_label = ctk.CTkLabel(main_frame, text="Password:", font=("Arial", 13, "bold"))
 pass_label.grid(row=2, column=0, sticky="w", pady=(15, 5))
 
 password_entry = ctk.CTkEntry(main_frame, show="*", placeholder_text="Enter strong password...")
-password_entry.grid(row=3, column=0, columnspan=2, sticky="we")
+password_entry.grid(row=3, column=0, sticky="we", padx=(0, 10))
 
 # Progress Row
 progress_bar = ctk.CTkProgressBar(main_frame, width=370)
